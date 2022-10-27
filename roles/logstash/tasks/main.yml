@@ -1,0 +1,43 @@
+---
+
+- name: Install Logstash (Ubuntu)
+  apt:
+    name: logstash
+    state: latest
+    update_cache: yes
+  when: ansible_distribution == "Ubuntu"
+
+- name: Run daemon-reload for logstash (Ubuntu)
+  systemd: daemon_reload = yes
+  when: ansible_distribution == "Ubuntu"
+
+- name: Enable service logstash (Ubuntu)
+  systemd:
+  name: logstash
+  enabled: yes
+  when: ansible_distribution == "Ubuntu"
+
+- name: ensure logstash is running (Ubuntu)
+  system: state=started name= logstash
+  when: ansible_distribution == "Ubuntu"
+
+- name: Install Logstash CentOS"
+  dnf:
+    name: logstash
+    state: latest
+    update_cache: yes
+  when: ansible_distribution == "CentOS"
+
+- name: Run daemon-reload for logstash for CentOS
+  systemd: daemon_reload = yes
+  when: ansible_distribution == "Ubuntu"
+
+- name: Enable service logstash for CentOS
+  systemd:
+    name: logstash
+    enbaled: yes
+  when: ansible_distribution == "CentOS"
+
+- name: ensure logstash is running for CentOS
+  systemd: state = started name = logstash
+  when: ansible_distribution == "CentOS"

@@ -1,0 +1,30 @@
+---
+
+- hosts: all
+  become: true
+  pre_tasks:
+
+  - name: update repository index (Centos)
+    tags: always
+    dnf:
+      update_cache: yes
+    changed_when: False
+    when: ansible_distribution == "Centos"
+
+  - name: update repository index (Ubuntu)
+    tags: always
+    apt:
+      update_cache: yes
+    changed_when: False
+    when: ansible_distribution == "Ubuntu"
+
+- hosts: all
+  become: true
+  roles:
+      - elasticsearch
+      - logstash
+      - grafana
+      - prometheus
+      - lampstack
+      - kibana
+      - influxdb
